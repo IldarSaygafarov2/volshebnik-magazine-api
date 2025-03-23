@@ -5,11 +5,18 @@ from . import models
 
 @admin.register(models.Catalog)
 class CatalogAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['pk', 'name']
+    search_fields = ['name']
+    list_display_links = ['pk', 'name']
 
 
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'name', 'catalog']
+    list_display_links = ['pk', 'name']
+    list_editable = ['catalog']
+    search_fields = ['name']
+    list_filter = ['catalog']
     prepopulated_fields = {"slug": ("name",)}
 
 

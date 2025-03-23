@@ -16,7 +16,7 @@ class Catalog(models.Model):
 
 class Category(models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, verbose_name='Каталог')
-    name = models.CharField(max_length=100, unique=True, verbose_name='Название')
+    name = models.CharField(max_length=100, verbose_name='Название')
     slug = models.SlugField(unique=True, help_text='Данное поле заполняется автоматически')
 
     def __str__(self):
