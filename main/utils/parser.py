@@ -1,5 +1,4 @@
 import json
-from pprint import pprint
 
 import requests
 from bs4 import BeautifulSoup
@@ -68,11 +67,6 @@ codes = [
 search_link = 'https://www.cocobee.kz/search/index.php?q={code}&s=Найти'
 
 
-# for code in codes:
-#     soup = get_soup(search_link.format(code=code))
-#     item = soup.find('div', class_='i_item jq_item')
-#     print(item)
-
 def get_products_by_barcodes(codes_list: list):
     result = []
     for code in codes_list:
@@ -83,8 +77,6 @@ def get_products_by_barcodes(codes_list: list):
         link = item.find('a', class_='i_item_name').get('href')
         price = item.find('span', class_='i_price').get_text(strip=True)
         preview = item.find('img').get('src')
-
-        # print(f'[{name}] - {link} - {price} - {preview}')
 
         inner_soup = get_soup(f'{BASE_URL}{link}')
 
@@ -103,6 +95,7 @@ def get_products_by_barcodes(codes_list: list):
             'preview': preview,
             'categories': categories,
             'publishing_house': publishing_house,
+            'barcode': code,
         })
     return result
 
