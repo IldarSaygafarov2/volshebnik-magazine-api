@@ -1,0 +1,457 @@
+{
+    "Весь ассортимент": [],
+    "Канцелярские товары": [
+        {
+            "title": "Альбомы и бумага для рисования, холсты",
+            "slug": "albomy-i-bumaga-dlya-risovaniya-kholsty"
+        },
+        {
+            "title": "Бейджи",
+            "slug": "beydzhi"
+        },
+        {
+            "title": "Блокноты, записные книжки и скетчбуки",
+            "slug": "bloknoty-zapisnye-knizhki-i-sketchbuki"
+        },
+        {
+            "title": "Бумага для принтера",
+            "slug": "bumaga-dlya-printera"
+        },
+        {
+            "title": "Ватман",
+            "slug": "vatman"
+        },
+        {
+            "title": "Краски и пастель",
+            "slug": "kraski-i-pastel"
+        },
+        {
+            "title": "Все канцелярские товары",
+            "slug": "vse-kantselyarskie-tovary_1"
+        },
+        {
+            "title": "Глобусы",
+            "slug": "globusy"
+        },
+        {
+            "title": "Для левшей",
+            "slug": "dlya-levshey"
+        },
+        {
+            "title": "Дневники",
+            "slug": "dnevniki"
+        },
+        {
+            "title": "Закладки",
+            "slug": "zakladki"
+        },
+        {
+            "title": "Калькуляторы",
+            "slug": "kalkulyatory"
+        },
+        {
+            "title": "Карандаши",
+            "slug": "karandashi"
+        },
+        {
+            "title": "Кисти, палитры, стаканчики, клеёнки",
+            "slug": "kisti-palitry-stakanchiki-kleyenki"
+        },
+        {
+            "title": "Картон и бумага для труда, фетр",
+            "slug": "karton-i-bumaga-dlya-truda-fetr"
+        },
+        {
+            "title": "Клей",
+            "slug": "kley"
+        },
+        {
+            "title": "Корректоры",
+            "slug": "korrektory"
+        },
+        {
+            "title": "Ланчбоксы и бутылочки",
+            "slug": "lanchboksy-i-butylochki"
+        },
+        {
+            "title": "Ластики",
+            "slug": "lastiki"
+        },
+        {
+            "title": "Линейки",
+            "slug": "lineyki"
+        },
+        {
+            "title": "Магнитные, маркерные, меловые доски",
+            "slug": "magnitnye-markernye-melovye-doski"
+        },
+        {
+            "title": "Маркеры и текстовыделители",
+            "slug": "markery-i-tekstovydeliteli"
+        },
+        {
+            "title": "Мелки",
+            "slug": "melki"
+        },
+        {
+            "title": "Ножницы",
+            "slug": "nozhnitsy"
+        },
+        {
+            "title": "Обложки",
+            "slug": "oblozhki"
+        },
+        {
+            "title": "Офисная канцелярия",
+            "slug": "ofisnaya-kantselyariya"
+        },
+        {
+            "title": "Пеналы",
+            "slug": "penaly"
+        },
+        {
+            "title": "Пластилин",
+            "slug": "plastilin"
+        },
+        {
+            "title": "Подставки для книг",
+            "slug": "podstavki-dlya-knig"
+        },
+        {
+            "title": "Подставки под пишущие принадлежности",
+            "slug": "podstavki-pod-pishushchie-prinadlezhnosti"
+        },
+        {
+            "title": "Расписание уроков",
+            "slug": "raspisanie-urokov"
+        },
+        {
+            "title": "Ручки",
+            "slug": "ruchki"
+        },
+        {
+            "title": "Счетные материалы, кассы букв и цифр",
+            "slug": "schetnye-materialy-kassy-bukv-i-tsifr"
+        },
+        {
+            "title": "Тетради",
+            "slug": "tetradi"
+        },
+        {
+            "title": "Точилки",
+            "slug": "tochilki"
+        },
+        {
+            "title": "Фломастеры",
+            "slug": "flomastery"
+        },
+        {
+            "title": "Циркули и готовальни",
+            "slug": "tsirkuli-i-gotovalni"
+        }
+    ],
+    "Адаптивная физическая культура (АФК)": [],
+    "0-2 года": [
+        {
+            "title": "Весь ассортимент  0-2 года",
+            "slug": "ves-assortiment-0-2-goda"
+        },
+        {
+            "title": "Cказки, Cтихи",
+            "slug": "ckazki-ctikhi"
+        },
+        {
+            "title": "Интерактивные книги",
+            "slug": "interaktivnye-knigi"
+        },
+        {
+            "title": "Развивающие пособия",
+            "slug": "razvivayushchie-posobiya"
+        },
+        {
+            "title": "Творчество- Лепка/аппликации/раскраски/наклейки",
+            "slug": "tvorchestvo-lepka-applikatsii-raskraski-nakleyki"
+        },
+        {
+            "title": "Развивающие игры/игрушки",
+            "slug": "razvivayushchie-igry-igrushki"
+        },
+        {
+            "title": "Конструкторы",
+            "slug": "konstruktory"
+        },
+        {
+            "title": "Книги на казахском языке",
+            "slug": "knigi-na-kazakhskom-yazyke"
+        },
+        {
+            "title": "Книги на английском языке",
+            "slug": "knigi-na-angliyskom-yazyke"
+        },
+        {
+            "title": "Книжки, Игрушки (музыкальные, деревянные, мягкие)",
+            "slug": "knizhki-igrushki-muzykalnye-derevyannye-myagkie"
+        },
+        {
+            "title": "Лучшее для подарка",
+            "slug": "luchshee-dlya-podarka"
+        },
+        {
+            "title": "Пазлы",
+            "slug": "pazly-i-mozayka"
+        }
+    ],
+    "3-5 лет": [
+        {
+            "title": "Весь ассортимент 3-5 лет",
+            "slug": "ves-assortiment-3-5-let"
+        },
+        {
+            "title": "Cказки, стихи",
+            "slug": "ckazki-stikhi"
+        },
+        {
+            "title": "Игрушки (музыкальные, деревянные, мягкие)",
+            "slug": "igrushki-muzykalnye-derevyannye-myagkie_1"
+        },
+        {
+            "title": "Книги на английском языке",
+            "slug": "knigi-na-angliyskom-yazyke_2"
+        },
+        {
+            "title": "Книги на казахском языке",
+            "slug": "knigi-na-kazakhskom-yazyke_2"
+        },
+        {
+            "title": "Интерактивные книги",
+            "slug": "interaktivnye-knigi_2"
+        },
+        {
+            "title": "Лучшее для подарка",
+            "slug": "luchshee-dlya-podarka_2"
+        },
+        {
+            "title": "Мозаика, пазлы",
+            "slug": "mozaika-pazly"
+        },
+        {
+            "title": "Настольные, магнитные и развивающие игры",
+            "slug": "nastolnye-magnitnye-i-razvivayushchie-igry"
+        },
+        {
+            "title": "Прописи, Активити",
+            "slug": "propisi-aktiviti"
+        },
+        {
+            "title": "Развивающие пособия (Cчет/буквы)",
+            "slug": "razvivayushchie-posobiya-cchet-bukvy"
+        },
+        {
+            "title": "Конструкторы",
+            "slug": "konstruktory_3"
+        },
+        {
+            "title": "Творчество- Лепка/аппликации/раскраски/наклейки",
+            "slug": "tvorchestvo-lepka-applikatsii-raskraski-nakleyki_1"
+        },
+        {
+            "title": "Энциклопедии",
+            "slug": "entsiklopedii_1"
+        }
+    ],
+    "6-9 лет": [
+        {
+            "title": "Весь ассортимент  6-9  лет",
+            "slug": "ves-assortiment-6-9-let"
+        },
+        {
+            "title": "Для самостоятельного чтения",
+            "slug": "dlya-samostoyatelnogo-chteniya"
+        },
+        {
+            "title": "Игрушки",
+            "slug": "igrushki"
+        },
+        {
+            "title": "Книги на английском языке",
+            "slug": "knigi-na-angliyskom-yazyke_3"
+        },
+        {
+            "title": "Книги на казахском языке",
+            "slug": "knigi-na-kazakhskom-yazyke_3"
+        },
+        {
+            "title": "Лучшее для подарка",
+            "slug": "luchshee-dlya-podarka_3"
+        },
+        {
+            "title": "Мозаика, пазлы",
+            "slug": "mozaika-pazly_1"
+        },
+        {
+            "title": "Настольные и другие развивающие игры",
+            "slug": "nastolnye-i-drugie-razvivayushchie-igry_1"
+        },
+        {
+            "title": "Развивающие пособия, Активити",
+            "slug": "razvivayushchie-posobiya-aktiviti"
+        },
+        {
+            "title": "Сказки, повести, романы",
+            "slug": "skazki-povesti-romany"
+        },
+        {
+            "title": "Творчество- Лепка/аппликации/раскраски/наклейки",
+            "slug": "tvorchestvo-lepka-applikatsii-raskraski-nakleyki_2"
+        },
+        {
+            "title": "Энциклопедии",
+            "slug": "entsiklopedii_2"
+        }
+    ],
+    "10-15+": [
+        {
+            "title": "Весь ассортимент 10-15 лет",
+            "slug": "ves-assortiment-10-15-let"
+        },
+        {
+            "title": "Книги на английском языке",
+            "slug": "knigi-na-angliyskom-yazyke_1"
+        },
+        {
+            "title": "Книги на казахском языке",
+            "slug": "knigi-na-kazakhskom-yazyke_1"
+        },
+        {
+            "title": "Лучшее для подарка",
+            "slug": "luchshee-dlya-podarka_1"
+        },
+        {
+            "title": "Настольные и развивающие игры",
+            "slug": "nastolnye-i-razvivayushchie-igry"
+        },
+        {
+            "title": "Пазлы",
+            "slug": "pazly_2"
+        },
+        {
+            "title": "Повести, романы, фантастика",
+            "slug": "povesti-romany-fantastika"
+        },
+        {
+            "title": "Творчество",
+            "slug": "tvorchestvo"
+        },
+        {
+            "title": "Развивающие пособия",
+            "slug": "razvivayushchie-posobiya_2"
+        },
+        {
+            "title": "Энциклопедии",
+            "slug": "entsiklopedii"
+        }
+    ],
+    "Книги на казахском языке": [],
+    "Книги на английском языке": [],
+    "Все для праздника": [],
+    "Игры/Игрушки": [
+        {
+            "title": "Деревянные",
+            "slug": "derevyannye"
+        },
+        {
+            "title": "Настольные",
+            "slug": "nastolnye"
+        },
+        {
+            "title": "Игрушки-антистресс",
+            "slug": "igrushki-antistress"
+        },
+        {
+            "title": "Развивающие",
+            "slug": "razvivayushchie"
+        },
+        {
+            "title": "Мягкие игрушки",
+            "slug": "myagkie-igrushki_1"
+        },
+        {
+            "title": "Тематические",
+            "slug": "tematicheskie"
+        },
+        {
+            "title": "Куклы",
+            "slug": "kukly"
+        }
+    ],
+    "Конструкторы": [],
+    "Cлаймы": [],
+    "Аксессуары для девочек": [],
+    "Cладости": [],
+    "Упаковка": [],
+    "Подарочные сертификаты": [],
+    "Подборки": [
+        {
+            "title": "Для девочек",
+            "slug": "dlya-devochek"
+        },
+        {
+            "title": "Для мальчиков",
+            "slug": "dlya-malchikov"
+        },
+        {
+            "title": "Книги и игры COCOBOOK",
+            "slug": "knigi-i-igry-cocobook"
+        },
+        {
+            "title": "Бюджетные гостинцы и идеи для комплиментов",
+            "slug": "byudzhetnye-gostintsy-i-idei-dlya-komplimentov"
+        },
+        {
+            "title": "В дорогу",
+            "slug": "v-dorogu"
+        },
+        {
+            "title": "Всё о космосе",
+            "slug": "vsye-o-kosmose-"
+        },
+        {
+            "title": "Всё про транспорт",
+            "slug": "vsye-pro-transport"
+        },
+        {
+            "title": "Всё о динозаврах",
+            "slug": "vsye-o-dinozavrakh"
+        },
+        {
+            "title": "Всё о животных",
+            "slug": "vsye-o-zhivotnykh"
+        },
+        {
+            "title": "Книги для чтения перед сном",
+            "slug": "knigi-dlya-chteniya-pered-snom"
+        },
+        {
+            "title": "Любимые герои",
+            "slug": "lyubimye-geroi"
+        },
+        {
+            "title": "Опыты",
+            "slug": "opyty"
+        },
+        {
+            "title": "Товары для купания",
+            "slug": "tovary-dlya-kupaniya"
+        },
+        {
+            "title": "Подарки на выпускной",
+            "slug": "podarki-na-vypusknoy_2"
+        },
+        {
+            "title": "Новый год и Рождество",
+            "slug": "novyy-god-i-rozhdestvo"
+        }
+    ],
+    "Родителям": [],
+    "Косметика": []
+}
