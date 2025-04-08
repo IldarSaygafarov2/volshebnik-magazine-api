@@ -9,8 +9,24 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with open("final_result.json", "r", encoding="utf-8") as file:
             content = json.load(file)
-        count = 0
+        
+        _ages = []
+        _categories = []
+        
         for item in content:
+            sku = item.get('Артикул:', '')
+            price = int(item.get('price')) * 24.70
+            slug = item.get('url').split('/')[-2]
+            product_code = item.get('Код товара:')
+            
+            ages = item.get('Возраст:', '')
+            
+            for age in ages.split(','):
+                _age, created = models.CategoryAge.objects.get_or_create(age=age)
+                print('age', _age)
+            
+            
+            
             publisher_name = item.get("Издательство:")
             if publisher_name is not None:
                 publisher, created = models.PublishingHouse.objects.get_or_create(
@@ -28,5 +44,16 @@ class Command(BaseCommand):
                     )
 
                     print(base_category)
-
+            # product, created = models.Product.objects.get_or_create(
+            #     barcode='',
+            #     title=item.get('title'),
+            #     slug=slug,
+            #     price=price,
+            #     description=item.get('description'),
+            #     sku=sku,
+                
+            # )
+        
+        print(_ages)
         # print(count)
+        
