@@ -66,3 +66,4 @@ media/
 .DS_Store
 .vscode/
 barcode_files/
+logs/
