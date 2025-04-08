@@ -32,6 +32,8 @@ var/
 *.manifest
 *.spec
 
+*.dart
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -63,3 +65,4 @@ target/
 media/
 .DS_Store
 .vscode/
+barcode_files/
