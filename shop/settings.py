@@ -14,7 +14,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'volshebnikstore.pythonanywhere.com',
     '127.0.0.1',
-    '45.92.173.107'
+    '45.92.173.107',
     'volshebnik.uz'
 ]
 
