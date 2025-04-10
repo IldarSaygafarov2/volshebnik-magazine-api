@@ -85,7 +85,7 @@ class PublishingHouse(models.Model):
 
 
 class CategoryAge(models.Model):
-    age = models.IntegerField(verbose_name="Возраст")
+    age = models.CharField(verbose_name="Возраст", max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.age}"
@@ -121,6 +121,7 @@ class Product(models.Model):
     size = models.CharField(
         verbose_name="Размер", max_length=200, null=True, blank=True
     )
+    pages = models.IntegerField(verbose_name='количество страниц', default=0, null=True, blank=True)
     publisher = models.ForeignKey(
         PublishingHouse,
         on_delete=models.CASCADE,
