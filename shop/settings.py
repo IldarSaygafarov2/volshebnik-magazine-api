@@ -11,7 +11,7 @@ SECRET_KEY = "django-insecure-#889hc07bow(1szinf7&)!oc7=d$wcwcf$6qz$^3m--omry#hm
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["volshebnikstore.pythonanywhere.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["volshebnikstore.pythonanywhere.com", "127.0.0.1", "volshebnik.uz"]
 
 CSRF_TRUSTED_ORIGINS = ["https://volshebnik.uz"]
 
