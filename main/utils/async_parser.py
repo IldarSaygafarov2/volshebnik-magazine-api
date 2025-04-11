@@ -4,6 +4,7 @@ from pathlib import Path
 from pprint import pprint
 
 import requests
+
 from bs4 import BeautifulSoup
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -11,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 search_link = "https://www.cocobee.kz/search/index.php?q={code}&s=Найти"
 
-BASE_URL = "https://www.cocobee.kz/"
+BASE_URL = "https://www.cocobee.kz"
 
 
 def read_json(file):
@@ -124,26 +125,91 @@ def read_barcode_product_detail():
                 right_item = cols[1].get_text(strip=True)
 
                 result_item[left_item] = right_item
-
-            # age = ""
-            # category = ""
-            # publisher = ""
-            # size = ""
-            # cover_type = ""
-            # sku = ""
         result.append(result_item)
 
     return result
 
 
-data = read_barcode_products_from_files()
+# data = read_barcode_products_from_files()
 
-inner_data = read_barcode_product_detail()
+# inner_data = read_barcode_product_detail()
 
-final_result = []
-for idx, item in enumerate(data):
-    final_result.append(dict(**item, **inner_data[idx]))
+# final_result = []
+# for idx, item in enumerate(data):
+#     final_result.append(dict(**item, **inner_data[idx]))
 
 
-with open("final_result.json", "w", encoding="utf-8") as file:
-    json.dump(final_result, file, indent=4, ensure_ascii=False)
+# with open("final_result.json", "w", encoding="utf-8") as file:
+#     json.dump(final_result, file, indent=4, ensure_ascii=False)
+
+
+def download_photos_from_json():
+    content = read_json("final_result.json")
+    previews = [item.get("image") for item in content]
+    galleries = [item.get("photos_list") for item in content]
+    slugs = [item.get("url").split("/")[-2] for item in content]
+
+    previews_dir = BASE_DIR / "media"
+    previews_dir.mkdir(exist_ok=True)
+
+    products_previews_dir = previews_dir / "products"
+    products_previews_dir.mkdir(exist_ok=True)
+
+    gallery_dir = products_previews_dir / "gallery"
+    gallery_dir.mkdir(exist_ok=True)
+
+    temp_result = {}
+    for idx, preview in enumerate(previews):
+
+        preview_url = BASE_URL + preview
+        file_name = preview.split("/")[-1]
+        data = requests.get(preview_url).content
+
+        temp_result[slugs[idx]] = {"preview": file_name}
+        with open(f"{products_previews_dir}/{file_name}", "wb") as _img:
+            _img.write(data)
+        print(f"downloaded: {file_name}")
+
+    for idx, gallery in enumerate(galleries):
+        _res = []
+
+        for item in gallery:
+            if item.startswith("https://"):
+                url = item
+            else:
+                url = BASE_URL + item
+
+            file_name = item.split("/")[-1]
+            _res.append(file_name)
+
+            data = requests.get(url).content
+            with open(f"{gallery_dir}/{file_name}", "wb") as _img:
+                _img.write(data)
+
+            print(f"===== downloaded: {file_name}")
+
+        temp_result[slugs[idx]]["gallery"] = _res
+        print(f"gallery downloaded")
+
+    with open("photos.json", mode="w", encoding="utf-8") as _file:
+        json.dump(temp_result, _file, indent=4, ensure_ascii=False)
+
+
+download_photos_from_json()
+
+
+def move_images_by_products_dir():
+    content = read_json("final_result.json")
+    previews = [item.get("image") for item in content]
+
+    previews_in_media = os.listdir(BASE_DIR / "media/products")
+    temp = []
+
+    for i in previews_in_media:
+        if i in previews:
+            temp.append(i)
+
+    print(temp)
+
+
+# move_images_by_products_dir()

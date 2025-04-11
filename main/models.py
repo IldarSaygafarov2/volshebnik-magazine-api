@@ -85,7 +85,9 @@ class PublishingHouse(models.Model):
 
 
 class CategoryAge(models.Model):
-    age = models.CharField(verbose_name="Возраст", max_length=100, null=True, blank=True)
+    age = models.CharField(
+        verbose_name="Возраст", max_length=100, null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.age}"
@@ -121,7 +123,9 @@ class Product(models.Model):
     size = models.CharField(
         verbose_name="Размер", max_length=200, null=True, blank=True
     )
-    pages = models.IntegerField(verbose_name='количество страниц', default=0, null=True, blank=True)
+    pages = models.IntegerField(
+        verbose_name="количество страниц", default=0, null=True, blank=True
+    )
     publisher = models.ForeignKey(
         PublishingHouse,
         on_delete=models.CASCADE,
@@ -155,6 +159,10 @@ class Product(models.Model):
         verbose_name_plural = "Продукты"
 
 
+def product_image_gallery_path(instance, filename):
+    return f"products/gallery/{instance.slug}/{filename}"
+
+
 class ProductImage(models.Model):
     product = models.ForeignKey(
         Product,
@@ -163,7 +171,10 @@ class ProductImage(models.Model):
         related_name="images",
     )
     image = models.ImageField(
-        verbose_name="Фотография", upload_to="products/gallery/", null=True, blank=True
+        verbose_name="Фотография",
+        upload_to=product_image_gallery_path,
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
