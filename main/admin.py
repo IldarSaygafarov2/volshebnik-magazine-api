@@ -47,6 +47,11 @@ class ProductImageInline(TabularInline):
 
 @admin.register(models.Product)
 class ProductAdmin(ModelAdmin):
+    list_display = ["pk", "title", "price", "publisher", "main_category", "subcategory"]
+    list_display_links = ["pk", "title"]
+    list_editable = ["publisher", "main_category", "subcategory", "price"]
+    list_filter = ["publisher", "main_category", "subcategory", "base_category"]
+    search_fields = ["title"]
     inlines = [ProductImageInline]
 
 
