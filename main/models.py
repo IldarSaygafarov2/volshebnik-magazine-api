@@ -118,19 +118,27 @@ class Product(models.Model):
     )
     price = models.FloatField(verbose_name="Цена")
     description = models.TextField(verbose_name="описание", null=True, blank=True)
-    sku = models.CharField(max_length=200, verbose_name="Артикул")
+    sku = models.CharField(
+        max_length=200, verbose_name="Артикул", null=True, blank=True
+    )
     ages = models.ManyToManyField(CategoryAge, verbose_name="Возраста")
     size = models.CharField(
         verbose_name="Размер", max_length=200, null=True, blank=True
     )
-    pages = models.IntegerField(
-        verbose_name="количество страниц", default=0, null=True, blank=True
+    pages = models.CharField(
+        max_length=150,
+        verbose_name="количество страниц",
+        default=0,
+        null=True,
+        blank=True,
     )
     publisher = models.ForeignKey(
         PublishingHouse,
         on_delete=models.CASCADE,
         verbose_name="Издательство",
         related_name="products",
+        null=True,
+        blank=True,
     )
     product_code = models.IntegerField(verbose_name="Код товара", default=0)
     main_category = models.ForeignKey(
@@ -138,12 +146,16 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Основная категория",
         related_name="products",
+        null=True,
+        blank=True,
     )
     subcategory = models.ForeignKey(
         Subcategory,
         on_delete=models.CASCADE,
         verbose_name="Подкатегория",
         related_name="products",
+        null=True,
+        blank=True,
     )
     base_category = models.ManyToManyField(
         ProductBaseCategory,
@@ -172,7 +184,7 @@ class ProductImage(models.Model):
     )
     image = models.ImageField(
         verbose_name="Фотография",
-        upload_to=product_image_gallery_path,
+        upload_to="products/gallery",
         null=True,
         blank=True,
     )
