@@ -195,7 +195,7 @@ def download_photos_from_json():
         json.dump(temp_result, _file, indent=4, ensure_ascii=False)
 
 
-download_photos_from_json()
+# download_photos_from_json()
 
 
 def move_images_by_products_dir():

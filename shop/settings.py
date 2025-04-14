@@ -121,3 +121,21 @@ UNFOLD = {
     "SITE_HEADER": "Volshebnik-shop",
     "SITE_SUBHEADER": "admin-panel",
 }
+
+SERVICE_ACCOUNT_EMAIL = (
+    "volshebnik-content@volshebnik-content-table.iam.gserviceaccount.com"
+)
+
+GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1ovrfMEvJWpkttXBq9cp_i2aLJcGWS2X8vQF_bfStuZA/edit?gid=1128242186#gid=1128242186"
+TABLE_ID = "1ovrfMEvJWpkttXBq9cp_i2aLJcGWS2X8vQF_bfStuZA"
+
+REDIS_HOST = "0.0.0.0"
+REDIS_PORT = "6379"
+
+CELERY_BROKER_URL = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
+CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
+CELERY_RESULT_BACKEND = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"

@@ -111,12 +111,14 @@ class ProductBaseCategory(models.Model):
 
 class Product(models.Model):
     barcode = models.IntegerField(verbose_name="Штрихкод", unique=True)
-    title = models.CharField(verbose_name="Название", max_length=200)
+    title = models.CharField(
+        verbose_name="Название", max_length=200, null=True, blank=True
+    )
     slug = models.SlugField(verbose_name="Короткая ссылка")
     preview = models.ImageField(
         upload_to="products/", null=True, blank=True, verbose_name="Заставка"
     )
-    price = models.FloatField(verbose_name="Цена")
+    price = models.FloatField(verbose_name="Цена", null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
     sku = models.CharField(
         max_length=200, verbose_name="Артикул", null=True, blank=True
@@ -132,6 +134,12 @@ class Product(models.Model):
         null=True,
         blank=True,
     )
+    product_code = models.IntegerField(
+        verbose_name="Код товара", default=0, null=True, blank=True
+    )
+    binding = models.CharField(
+        verbose_name="Переплет", blank=True, null=True, max_length=100
+    )
     publisher = models.ForeignKey(
         PublishingHouse,
         on_delete=models.CASCADE,
@@ -140,7 +148,7 @@ class Product(models.Model):
         null=True,
         blank=True,
     )
-    product_code = models.IntegerField(verbose_name="Код товара", default=0)
+
     main_category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -161,10 +169,12 @@ class Product(models.Model):
         ProductBaseCategory,
         verbose_name="Базовые категории",
         related_name="products",
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
-        return self.title
+        return self.title if self.title else str(self.barcode)
 
     class Meta:
         verbose_name = "Продукт"
