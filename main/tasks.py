@@ -6,7 +6,7 @@ from shop.settings import BASE_DIR
 from utils.google_sheets import get_items
 from .models import Product, PublishingHouse, Category, Subcategory, CategoryAge
 import requests
-
+from bs4 import BeautifulSoup
 
 # from .models import Person
 # import requests
@@ -34,12 +34,23 @@ def get_spreadsheet_items():
         binding = item.get("Переплёт")
         subcategory = item.get("Под категория")
         image_url = item.get("Ссылка на фото")
+        print("//".join(list(filter(lambda x: x, image_url.split("/")[:3]))))
+        return
         price = item.get("Цена")
+
+        soup = BeautifulSoup(requests.get(image_url).text, "html.parser")
+        slider_block = soup.find("div", {"class": "product-pages-slider"})
+        slider_items = [url.get("src") for url in slider_block.find_all("img")]
+
+        preview = slider_items[0].split("/")[-1]
+
+        print(slider_items)
+        print(preview)
 
         file_name = image_url.split("/")[-2]
         data = requests.get(image_url).content
 
-        with open(f"media/products/{file_name}", "wb") as _img:
+        with open(f"media/products/{preview}", "wb") as _img:
             _img.write(data)
 
         main_category, main_category_created = Category.objects.get_or_create(
@@ -72,6 +83,7 @@ def get_spreadsheet_items():
             product.subcategory = product_subcategory
             product.price = int(price) if price else 0
             product.preview = f"products/{file_name}"
+            product.pages = pages
             product.save()
             print(f"Product updated: {product}")
         except Product.DoesNotExist:
@@ -87,6 +99,7 @@ def get_spreadsheet_items():
                 subcategory=product_subcategory,
                 publisher=publisher_obj,
                 preview=f"products/{file_name}",
+                pages=pages,
             )
             new_product.ages.add(age)
             print(f"product created: {new_product}")
