@@ -7,7 +7,7 @@ TABLE_ID = "1ovrfMEvJWpkttXBq9cp_i2aLJcGWS2X8vQF_bfStuZA"
 
 
 def client_init_json() -> Client:
-    return service_account(filename="volshebnik-content-table-b7c8e96d1b15.json")
+    return service_account(filename="volshebnik-content-table-36ed1851bb8d.json")
 
 
 def get_table_by_url(client: Client, table_url: str):
