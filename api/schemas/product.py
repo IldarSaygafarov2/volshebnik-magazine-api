@@ -28,9 +28,10 @@ class ProductCreateSchema(Schema):
     barcode: str
     price: Optional[str] = ""
     size: Optional[str] = ""
-    pages: Optional[str] = ""
+    pages: Optional[str] = None
     binding: Optional[str] = ""
     publisher: str
     main_category: str
     subcategory: str
     age: str
+    preview: str

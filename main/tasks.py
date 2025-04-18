@@ -1,12 +1,11 @@
-from pprint import pprint
+# from pprint import pprint
 
-from slugify import slugify
-from shop.celery import app
-from shop.settings import BASE_DIR
-from utils.google_sheets import get_items
-from .models import Product, PublishingHouse, Category, Subcategory, CategoryAge
-import requests
-from bs4 import BeautifulSoup
+# from slugify import slugify
+# from shop.settings import BASE_DIR
+# from utils.google_sheets import get_items
+# from .models import Product, PublishingHouse, Category, Subcategory, CategoryAge
+# import requests
+# from bs4 import BeautifulSoup
 
 # from .models import Person
 # import requests
