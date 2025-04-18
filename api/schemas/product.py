@@ -1,6 +1,26 @@
 from typing import Optional
 from ninja import Schema
 
+from .ages import CategoryAgeSchema
+from .category import CategorySchema
+from .subcategory import SubcategorySchema
+from .publisher import PublisherSchema
+
+
+class ProductSchema(Schema):
+    id: int
+    title: str
+    slug: str
+    price: float | str
+    description: str
+    ages: list[CategoryAgeSchema]
+    size: str
+    pages: str
+    binding: str
+    publisher: PublisherSchema
+    main_category: CategorySchema
+    subcategory: SubcategorySchema
+
 
 class ProductCreateSchema(Schema):
     title: str
@@ -13,3 +33,4 @@ class ProductCreateSchema(Schema):
     publisher: str
     main_category: str
     subcategory: str
+    age: str
