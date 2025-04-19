@@ -118,7 +118,7 @@ class Product(models.Model):
     preview = models.ImageField(
         upload_to="products/", null=True, blank=True, verbose_name="Заставка"
     )
-    price = models.FloatField(verbose_name="Цена", null=True, blank=True)
+    price = models.CharField(max_length=150, verbose_name="Цена", null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
     sku = models.CharField(
         max_length=200, verbose_name="Артикул", null=True, blank=True
