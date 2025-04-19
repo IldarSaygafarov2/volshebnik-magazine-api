@@ -22,6 +22,12 @@ class ProductSchema(Schema):
     subcategory: SubcategorySchema
 
 
+class ProductResultSchema(Schema):
+    is_updated: Optional[bool]
+    is_created: Optional[bool]
+    product: ProductSchema
+
+
 class ProductCreateSchema(Schema):
     title: str
     description: Optional[str] = ""

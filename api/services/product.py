@@ -47,6 +47,8 @@ class ProductService:
         age, created_age = models.CategoryAge.objects.get_or_create(age=data.age)
 
         preview_name = self.download_images_by_preview_url(preview_url=data.preview)
+        is_updated = None
+        is_created = None
 
         try:
             product = models.Product.objects.get(barcode=int(data.barcode))
@@ -64,6 +66,7 @@ class ProductService:
             product.preview = f"products/{preview_name}"
             product.pages = data.pages
             product.save()
+            is_updated = True
             print(f"Product updated: {product}")
         except models.Product.DoesNotExist:
             product = models.Product.objects.create(
@@ -81,5 +84,6 @@ class ProductService:
                 pages=data.pages,
             )
             product.ages.add(age)
+            is_created = True
             print(f"product created: {product}")
-        return product
+        return product, is_updated, is_created
