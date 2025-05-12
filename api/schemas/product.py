@@ -7,6 +7,7 @@ from .ages import CategoryAgeSchema
 from .category import CategorySchema
 from .publisher import PublisherSchema
 from .subcategory import SubcategorySchema
+from main.models import Product
 
 
 class ProductSchema(Schema):
@@ -78,16 +79,52 @@ class ProductCategoryAgeSchema(Schema):
     age: str
 
 
+class ProductBaseCategorySchema(Schema):
+    id: int
+    name: str
+    slug: str
+
+
+class ProductCharacteristicsSchema(Schema):
+    barcode: Optional[int]
+    sku: Optional[str]
+    pages: Optional[str]
+    size: Optional[str]
+    product_code: Optional[int]
+    binding: Optional[str]
+    base_categories: Optional[list[ProductBaseCategorySchema]]
+    ages: list[CategoryAgeSchema]
+    publisher: Optional[ProductPublisherSchema]
+
+
 class ProductDetailSchema(Schema):
     id: int
     title: str
     description: Optional[str]
     price: Optional[str]
-    barcode: Optional[str]
-    size: Optional[str]
-    pages: Optional[str]
-    binding: Optional[str]
-
-    publisher: Optional[ProductPublisherSchema]
-    ages: Optional[list[CategoryAgeSchema]]
     images: list[ProductImageSchema]
+    characteristics: Optional[ProductCharacteristicsSchema] = None
+
+    @staticmethod
+    def resolve_characteristics(obj: Product) -> ProductCharacteristicsSchema:
+        return ProductCharacteristicsSchema(
+            barcode=obj.barcode,
+            sku=obj.sku,
+            ages=obj.ages.all(),
+            publisher=obj.publisher,
+            base_categories=obj.base_category.all(),
+            pages=obj.pages,
+            size=obj.size,
+            product_code=obj.product_code,
+            binding=obj.binding,
+        )
+        return {
+            "barcode": obj.barcode,
+            "sku": obj.sku,
+            "ages": [ProductCategoryAgeSchema(id=age.pk, age=age.age) for age in obj.ages.all()],
+            "publisher": obj.publisher.name,
+            "seria": obj.main_category.name,
+            "pages": obj.pages,
+            "size": obj.size,
+            "product_code": obj.product_code
+        }

@@ -7,7 +7,7 @@ from main.models import Category, Subcategory
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        with open('categories.json', mode='r', encoding='utf-8') as f:
+        with open('json_data/categories.json', mode='r', encoding='utf-8') as f:
             categories = json.load(f)
 
         for category, subcategories in categories.items():

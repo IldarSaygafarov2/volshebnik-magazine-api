@@ -12,10 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        with open("final_result.json", "r", encoding="utf-8") as file:
+        with open("json_data/final_result.json", "r", encoding="utf-8") as file:
             content = json.load(file)
 
-        with open("photos.json", "r", encoding="utf-8") as photos:
+        with open("json_data/photos.json", "r", encoding="utf-8") as photos:
             photos_content = json.load(photos)
 
         _ages = []

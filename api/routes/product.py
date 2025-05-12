@@ -1,14 +1,10 @@
-from django.http import HttpRequest
-from ninja import Router
-
-from api.schemas.product import (
-    ProductCreateSchema,
-    ProductListSchema,
-    ProductPaginatedSchema,
-    ProductResultSchema,
-)
+from api.schemas.product import (ProductCreateSchema, ProductListSchema,
+                                 ProductPaginatedSchema, ProductResultSchema, ProductDetailSchema)
 from api.services.product import ProductService
+from django.http import HttpRequest
 from main.models import Product
+from ninja import Router
+from django.shortcuts import get_object_or_404
 
 router = Router(tags=["Products"])
 product_service = ProductService()
@@ -40,3 +36,9 @@ def get_paginated_products(request: HttpRequest, limit: int = 5, offset: int = 0
         offset=offset,
         products=paginated_products,
     )
+
+
+@router.get('/products/{slug}', response=ProductDetailSchema)
+def get_product_detail(request: HttpRequest, slug: str):
+    product = get_object_or_404(Product, slug=slug)
+    return product
