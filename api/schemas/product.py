@@ -118,13 +118,3 @@ class ProductDetailSchema(Schema):
             product_code=obj.product_code,
             binding=obj.binding,
         )
-        return {
-            "barcode": obj.barcode,
-            "sku": obj.sku,
-            "ages": [ProductCategoryAgeSchema(id=age.pk, age=age.age) for age in obj.ages.all()],
-            "publisher": obj.publisher.name,
-            "seria": obj.main_category.name,
-            "pages": obj.pages,
-            "size": obj.size,
-            "product_code": obj.product_code
-        }

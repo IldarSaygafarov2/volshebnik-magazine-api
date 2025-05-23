@@ -1,5 +1,10 @@
-from api.schemas.product import (ProductCreateSchema, ProductListSchema,
-                                 ProductPaginatedSchema, ProductResultSchema, ProductDetailSchema)
+from api.schemas.product import (
+    ProductCreateSchema,
+    ProductListSchema,
+    ProductPaginatedSchema,
+    ProductResultSchema,
+    ProductDetailSchema,
+)
 from api.services.product import ProductService
 from django.http import HttpRequest
 from main.models import Product
@@ -38,7 +43,7 @@ def get_paginated_products(request: HttpRequest, limit: int = 5, offset: int = 0
     )
 
 
-@router.get('/products/{slug}', response=ProductDetailSchema)
+@router.get("/products/{slug}", response=ProductDetailSchema)
 def get_product_detail(request: HttpRequest, slug: str):
     product = get_object_or_404(Product, slug=slug)
     return product

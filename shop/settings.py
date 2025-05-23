@@ -16,6 +16,7 @@ ALLOWED_HOSTS = ["volshebnikstore.pythonanywhere.com", "127.0.0.1", "volshebnik.
 CSRF_TRUSTED_ORIGINS = ["https://volshebnik.uz"]
 
 INSTALLED_APPS = [
+    # admin
     "unfold",  # before django.contrib.admin
     "unfold.contrib.filters",  # optional, if special filters are needed
     "unfold.contrib.forms",  # optional, if special form elements are needed
@@ -23,6 +24,8 @@ INSTALLED_APPS = [
     "unfold.contrib.import_export",  # optional, if django-import-export package is used
     "unfold.contrib.guardian",  # optional, if django-guardian package is used
     "unfold.contrib.simple_history",
+    # external
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -129,6 +133,7 @@ SERVICE_ACCOUNT_EMAIL = (
 
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1ovrfMEvJWpkttXBq9cp_i2aLJcGWS2X8vQF_bfStuZA/edit?gid=1128242186#gid=1128242186"
 TABLE_ID = "1ovrfMEvJWpkttXBq9cp_i2aLJcGWS2X8vQF_bfStuZA"
+CORS_ALLOW_ALL_ORIGINS = True
 
 # REDIS_HOST = "0.0.0.0"
 # REDIS_PORT = "6379"
