@@ -114,7 +114,7 @@ STATIC_URL = "site/static/"
 STATIC_ROOT = BASE_DIR / "main/static"
 
 
-MEDIA_URL = "media/"
+MEDIA_URL = "site/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
