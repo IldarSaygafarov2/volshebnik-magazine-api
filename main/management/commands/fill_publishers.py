@@ -8,7 +8,7 @@ from main import models
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        with open('products.json', mode='r', encoding='utf-8') as json_file:
+        with open('json_data/products.json', mode='r', encoding='utf-8') as json_file:
             data = json.load(json_file)
 
         for publisher in data['publishers']:

@@ -32,18 +32,18 @@ class ProductResultSchema(Schema):
 
 
 class ProductCreateSchema(Schema):
-    title: str
+    title: Optional[str] = ""
     description: Optional[str] = ""
-    barcode: str
+    barcode: Optional[str] = ""
     price: Optional[str] = ""
     size: Optional[str] = ""
     pages: Optional[str] = None
     binding: Optional[str] = ""
-    publisher: str
-    main_category: str
-    subcategory: str
-    age: str
-    preview: str
+    publisher: Optional[str] = ""
+    main_category: Optional[str] = ""
+    subcategory: Optional[str] = ""
+    age: Optional[str] = ""
+    preview: Optional[str] = ""
 
 
 class ProductListSchema(Schema):

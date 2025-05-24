@@ -19,14 +19,25 @@ class ProductService:
         images = [i.get("src") for i in wrapper.find_all("img")]
         previews_dir = BASE_DIR / "media/products"
         gallery_dir = previews_dir / "gallery"
+        gallery_dir.mkdir(exist_ok=True)
+
         preview = images[0] if len(images) > 0 else ""
         preview_name = preview.split("/")[-1]
+
+        images_names = []
+
+        for image in images:
+            image_name = image.split('/')[-1]
+            images_names.append(image_name)
+            image_content = requests.get(f"{self.IMAGE_HOST}/{image}").content
+            with open(f"{gallery_dir}/{image_name}", mode="wb") as f:
+                f.write(image_content)
 
         preview_content = requests.get(f"{self.IMAGE_HOST}/{preview}").content
         with open(f"{previews_dir}/{preview_name}", mode="wb") as f:
             f.write(preview_content)
 
-        return preview_name
+        return preview_name, images_names
 
     def create_or_update(self, data: ProductCreateSchema):
         main_category, main_category_created = models.Category.objects.get_or_create(
@@ -46,7 +57,7 @@ class ProductService:
         )
         age, created_age = models.CategoryAge.objects.get_or_create(age=data.age)
 
-        preview_name = self.download_images_by_preview_url(preview_url=data.preview)
+        preview_name, images_names = self.download_images_by_preview_url(preview_url=data.preview)
         is_updated = None
         is_created = None
 
@@ -67,6 +78,17 @@ class ProductService:
             product.pages = data.pages
             product.save()
             is_updated = True
+
+            for image_name in images_names:
+                current_images = models.ProductImage.objects.filter(product=product)
+                for current_image in current_images:
+                    current_image.delete()
+
+                models.ProductImage.objects.create(
+                    product=product,
+                    image=f'products/gallery/{image_name}'
+                )
+
             print(f"Product updated: {product}")
         except models.Product.DoesNotExist:
             product = models.Product.objects.create(
@@ -85,5 +107,14 @@ class ProductService:
             )
             product.ages.add(age)
             is_created = True
+            for image_name in images_names:
+                current_images = models.ProductImage.objects.filter(product=product)
+                for current_image in current_images:
+                    current_image.delete()
+
+                models.ProductImage.objects.create(
+                    product=product,
+                    image=f'products/gallery/{image_name}'
+                )
             print(f"product created: {product}")
         return product, is_updated, is_created
