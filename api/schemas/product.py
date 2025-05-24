@@ -100,6 +100,7 @@ class ProductCharacteristicsSchema(Schema):
 class ProductDetailSchema(Schema):
     id: int
     title: str
+    preview: Optional[str]
     description: Optional[str]
     price: Optional[str]
     images: list[ProductImageSchema]
