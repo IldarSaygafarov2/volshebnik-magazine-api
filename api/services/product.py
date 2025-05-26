@@ -7,12 +7,20 @@ from slugify import slugify
 from api.schemas.product import ProductCreateSchema
 from shop.settings import BASE_DIR
 from main import models
+from utils.main import get_site_name_from_url
 
 
 class ProductService:
     IMAGE_HOST = "https://robins.ru"
+    SITE_URLS = [
+        'robins.ru',
+    ]
 
     def download_images_by_preview_url(self, preview_url: str):
+        site_name = get_site_name_from_url(preview_url)
+
+        if site_name not in self.SITE_URLS:
+            return None, None
 
         soup = BeautifulSoup(requests.get(preview_url).text, "html.parser")
         wrapper = soup.find("div", {"class": "flexslider-big"})
@@ -40,6 +48,7 @@ class ProductService:
         return preview_name, images_names
 
     def create_or_update(self, data: ProductCreateSchema):
+        print(data)
         main_category, main_category_created = models.Category.objects.get_or_create(
             name=data.main_category
         )
