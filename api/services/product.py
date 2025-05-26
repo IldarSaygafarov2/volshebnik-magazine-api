@@ -26,6 +26,7 @@ class ProductService:
         wrapper = soup.find("div", {"class": "flexslider-big"})
         images = [i.get("src") for i in wrapper.find_all("img")]
         previews_dir = BASE_DIR / "media/products"
+        previews_dir.mkdir(exist_ok=True)
         gallery_dir = previews_dir / "gallery"
         gallery_dir.mkdir(exist_ok=True)
 
@@ -48,7 +49,6 @@ class ProductService:
         return preview_name, images_names
 
     def create_or_update(self, data: ProductCreateSchema):
-        print(data)
         main_category, main_category_created = models.Category.objects.get_or_create(
             name=data.main_category
         )
@@ -65,6 +65,7 @@ class ProductService:
             slug=slugify(data.publisher),
         )
         age, created_age = models.CategoryAge.objects.get_or_create(age=data.age)
+        print(main_category, product_subcategory, publisher_obj, age)
 
         preview_name, images_names = self.download_images_by_preview_url(preview_url=data.preview)
         is_updated = None
@@ -88,15 +89,15 @@ class ProductService:
             product.save()
             is_updated = True
 
-            for image_name in images_names:
-                current_images = models.ProductImage.objects.filter(product=product)
-                for current_image in current_images:
-                    current_image.delete()
-
-                models.ProductImage.objects.create(
-                    product=product,
-                    image=f'products/gallery/{image_name}'
-                )
+            # for image_name in images_names:
+            #     current_images = models.ProductImage.objects.filter(product=product)
+            #     for current_image in current_images:
+            #         current_image.delete()
+            #
+            #     models.ProductImage.objects.create(
+            #         product=product,
+            #         image=f'products/gallery/{image_name}'
+            #     )
 
             print(f"Product updated: {product}")
         except models.Product.DoesNotExist:
@@ -116,14 +117,14 @@ class ProductService:
             )
             product.ages.add(age)
             is_created = True
-            for image_name in images_names:
-                current_images = models.ProductImage.objects.filter(product=product)
-                for current_image in current_images:
-                    current_image.delete()
-
-                models.ProductImage.objects.create(
-                    product=product,
-                    image=f'products/gallery/{image_name}'
-                )
+            # for image_name in images_names:
+            #     current_images = models.ProductImage.objects.filter(product=product)
+            #     for current_image in current_images:
+            #         current_image.delete()
+            #
+            #     models.ProductImage.objects.create(
+            #         product=product,
+            #         image=f'products/gallery/{image_name}'
+            #     )
             print(f"product created: {product}")
         return product, is_updated, is_created

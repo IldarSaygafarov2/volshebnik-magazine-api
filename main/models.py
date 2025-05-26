@@ -130,7 +130,7 @@ class Product(models.Model):
     pages = models.CharField(
         max_length=150,
         verbose_name="количество страниц",
-        default=0,
+        default="0",
         null=True,
         blank=True,
     )
