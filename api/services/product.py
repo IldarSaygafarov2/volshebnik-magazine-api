@@ -1,13 +1,12 @@
-import os
-
 import requests
 from bs4 import BeautifulSoup
 from slugify import slugify
 
 from api.schemas.product import ProductCreateSchema
-from shop.settings import BASE_DIR
 from main import models
+from shop.settings import BASE_DIR
 from utils.main import get_site_name_from_url
+from utils.parser import parse_images_by_domain
 
 
 class ProductService:
@@ -17,36 +16,43 @@ class ProductService:
     ]
 
     def download_images_by_preview_url(self, preview_url: str):
-        site_name = get_site_name_from_url(preview_url)
 
-        if site_name not in self.SITE_URLS:
-            return None, None
+        domain = [i for i in preview_url.split('/') if i][1]
+        preview, images = parse_images_by_domain(domain, preview_url)
+        print("PREVIEW_URL", preview_url)
+        print("IMAGES", images)
+        print("PREVIEW IMAGE", preview)
 
-        soup = BeautifulSoup(requests.get(preview_url).text, "html.parser")
-        wrapper = soup.find("div", {"class": "flexslider-big"})
-        images = [i.get("src") for i in wrapper.find_all("img")]
-        previews_dir = BASE_DIR / "media/products"
-        previews_dir.mkdir(exist_ok=True)
-        gallery_dir = previews_dir / "gallery"
-        gallery_dir.mkdir(exist_ok=True)
-
-        preview = images[0] if len(images) > 0 else ""
-        preview_name = preview.split("/")[-1]
-
-        images_names = []
-
-        for image in images:
-            image_name = image.split('/')[-1]
-            images_names.append(image_name)
-            image_content = requests.get(f"{self.IMAGE_HOST}/{image}").content
-            with open(f"{gallery_dir}/{image_name}", mode="wb") as f:
-                f.write(image_content)
-
-        preview_content = requests.get(f"{self.IMAGE_HOST}/{preview}").content
-        with open(f"{previews_dir}/{preview_name}", mode="wb") as f:
-            f.write(preview_content)
-
-        return preview_name, images_names
+        # site_name = get_site_name_from_url(preview_url)
+        #
+        # if site_name not in self.SITE_URLS:
+        #     return None, None
+        #
+        # soup = BeautifulSoup(requests.get(preview_url).text, "html.parser")
+        # wrapper = soup.find("div", {"class": "flexslider-big"})
+        # images = [i.get("src") for i in wrapper.find_all("img")]
+        # previews_dir = BASE_DIR / "media/products"
+        # previews_dir.mkdir(exist_ok=True)
+        # gallery_dir = previews_dir / "gallery"
+        # gallery_dir.mkdir(exist_ok=True)
+        #
+        # preview = images[0] if len(images) > 0 else ""
+        # preview_name = preview.split("/")[-1]
+        #
+        # images_names = []
+        #
+        # for image in images:
+        #     image_name = image.split('/')[-1]
+        #     images_names.append(image_name)
+        #     image_content = requests.get(f"{self.IMAGE_HOST}/{image}").content
+        #     with open(f"{gallery_dir}/{image_name}", mode="wb") as f:
+        #         f.write(image_content)
+        #
+        # preview_content = requests.get(f"{self.IMAGE_HOST}/{preview}").content
+        # with open(f"{previews_dir}/{preview_name}", mode="wb") as f:
+        #     f.write(preview_content)
+        #
+        # return preview_name, images_names
 
     def create_or_update(self, data: ProductCreateSchema):
         main_category, main_category_created = models.Category.objects.get_or_create(
@@ -67,7 +73,8 @@ class ProductService:
         age, created_age = models.CategoryAge.objects.get_or_create(age=data.age)
         print(main_category, product_subcategory, publisher_obj, age)
 
-        preview_name, images_names = self.download_images_by_preview_url(preview_url=data.preview)
+        self.download_images_by_preview_url(preview_url=data.preview)
+        # preview_name, images_names = self.download_images_by_preview_url(preview_url=data.preview)
         is_updated = None
         is_created = None
 
@@ -84,7 +91,7 @@ class ProductService:
             product.binding = data.binding
             product.subcategory = product_subcategory
             product.price = int(data.price) if data.price else 0
-            product.preview = f"products/{preview_name}"
+            # product.preview = f"products/{preview_name}"
             product.pages = data.pages
             product.save()
             is_updated = True
@@ -112,7 +119,7 @@ class ProductService:
                 main_category=main_category,
                 subcategory=product_subcategory,
                 publisher=publisher_obj,
-                preview=f"products/{preview_name}",
+                # preview=f"products/{preview_name}",
                 pages=data.pages,
             )
             product.ages.add(age)

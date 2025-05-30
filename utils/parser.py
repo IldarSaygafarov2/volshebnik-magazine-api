@@ -1,102 +1,145 @@
-# import json
-#
-# import requests
-# from bs4 import BeautifulSoup
-#
-#
-# def write_json(data: list, filename: str):
-#     with open(filename, "w", encoding='utf-8') as f:
-#         json.dump(data, f, indent=4, ensure_ascii=False)
-#
-#
-# def read_json(filename: str):
-#     with open(filename, "r", encoding='utf-8') as f:
-#         data = json.load(f)
-#     return data
-#
-#
-# BASE_URL = 'https://www.cocobee.kz/'
-#
-#
-# def get_soup(url: str) -> BeautifulSoup:
-#     response = requests.get(url)
-#     response.raise_for_status()
-#     soup = BeautifulSoup(response.text, 'html.parser')
-#     return soup
-#
-#
-# # codes = [
-# #     9785436607283,
-# #     9785436603629,
-# #     9785436603773,
-# #     9785436603100,
-# #     9785436609300
-# # ]
-#
-# search_link = 'https://www.cocobee.kz/search/index.php?q={code}&s=Найти'
-#
-#
-# def get_categories_data():
-#     soup = get_soup(BASE_URL + 'catalog/')
-#
-#     wrapper = soup.find('div', {'class': 'i_sect_list'})
-#
-#     items = wrapper.find_all('div', {'class': 'i_sl_1'})
-#
-#     categories = {}
-#
-#     for item in items:
-#         title = item.find('div', {'class': 'i_ml135'}).find('a', {'class': 'i_sl_title'}).get_text(strip=True)
-#         categories[title] = []
-#         for i in item.find('ul').find_all('li'):
-#             inner_title = i.get_text(strip=True)
-#             inner_slug = i.find('a').get('href').split('/')[-2]
-#
-#             categories[title].append({'title': inner_title, 'slug': inner_slug})
-#
-#     return categories
-#
-#
-# def get_products_by_barcodes():
-#     data = read_json('products.json')
-#     not_found_barcodes = []
-#     found_barcodes = []
-#     for code in data.get('barcodes'):
-#         try:
-#             code = int(code)
-#         except ValueError:
-#             continue
-#
-#         link = search_link.format(code=code)
-#         soup = get_soup(link)
-#
-#         wrap = soup.find('div', {'class': 'search-advanced-result'})
-#
-#         found = wrap.get_text(strip=True).split()[-1]
-#
-#         if found == '0':
-#             print(f'barcode {code} not found')
-#             not_found_barcodes.append(code)
-#             continue
-#         found_barcodes.append(code)
-#
-#     print('=' * 20)
-#     result = {
-#         'total_not_found': len(not_found_barcodes),
-#         'total_found': len(found_barcodes),
-#         'not_found_barcodes': not_found_barcodes,
-#         'found_barcodes': found_barcodes,
-#     }
-#     write_json(result, 'not_found_barcodes.json')
+import json
+
+import requests
+from bs4 import BeautifulSoup
+
+test_url = 'https://maguss.ru/catalog/12061/'
+
+
+def get_preview_and_images(list_object: list):
+    if not list_object:
+        return ""
+    return list_object.pop(0), list_object
+
+
+def get_soup(url: str, headers=None) -> BeautifulSoup:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, 'html.parser')
+    return soup
+
+
+def parse_robins_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find("div", {"class": "flexslider-big"})
+    images = [i.get("src") for i in wrapper.find_all("img")]
+    return get_preview_and_images(images)
+
+
+def parse_kristall_kanc_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('div', class_='detail-gallery-big-slider-main__ratio-inner')
+    images = wrapper.find_all('img', class_='detail-gallery-big__picture')
+    images = [i.get('src') for i in images]
+    return get_preview_and_images(images)
+
+
+def parse_moy_lvenok_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('ul', class_='thumbnails')
+    images = [i.get('src') for i in wrapper.find_all('img')]
+    return get_preview_and_images(images)
+
+
+def parse_chitatel_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('div', class_='images-primary')
+    images = [i.get('src') for i in wrapper.find_all('img')]
+    return get_preview_and_images(images)
+
+
+def parse_detmir_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('div', class_='bwg')
+    images = [i.get("src") for i in wrapper.find_all('img')]
+    return get_preview_and_images(images)
+
+
+def parse_shkola7gnomov_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('div', id='product-gallery')
+    images = [i.get("src") for i in wrapper.find_all('img')]
+    return get_preview_and_images(images)
+
+
+def parse_childrensmarket_site_images(images_page_url: str):
+    # TODO: поменять 150х150 на 400х400
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('div', class_='magnific-gallery')
+    images = [i.get("src") for i in wrapper.find_all('img')]
+    return get_preview_and_images(images)
+
+
+def parse_maguss_site_images(images_page_url: str):
+    soup = get_soup(images_page_url)
+    wrapper = soup.find('div', class_='detail-gallery-big-slider')
+    images = [i.get("src") for i in wrapper.find_all('img')]
+    return get_preview_and_images(images)
+
+
+# def parse_sima_land_site_images(images_page_url: str):
+#     pass
 #
 #
-# import time
+# def parse_21vek_site_images(images_page_url: str):
+#     pass
 #
-# start = time.time()
-# get_products_by_barcodes()
 #
-# end = time.time()
+# def parse_bondibon_site_images(images_page_url: str):
+#     pass
 #
-# print(f'total time {end - start}')
-# # data = get_categories_data()
-# # write_json(data, 'categories.json')
+#
+# def parse_chitai_gorod_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_ozon_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_wildberries_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_litres_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_labirint_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_book24_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_eksmo_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_alpinabook_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_bookvoed_site_images(images_page_url: str):
+#     pass
+#
+#
+# def parse_ast_ru_site_images(images_page_url: str):
+#     pass
+
+URLS = {
+    "robins.ru": parse_robins_site_images,
+    "kristall-kanc.ru": parse_kristall_kanc_site_images,
+    "moy-lvenok.ru": parse_moy_lvenok_site_images,
+    "chitatel.by": parse_chitatel_site_images,
+    "www.detmir.ru": parse_detmir_site_images,
+    "shkola7gnomov.ru": parse_shkola7gnomov_site_images,
+    "childrensmarket.ru": parse_childrensmarket_site_images,
+    "maguss.ru": parse_maguss_site_images,
+}
+
+
+def parse_images_by_domain(domain: str, page_url: str):
+    return URLS.get(domain)(page_url)
+
