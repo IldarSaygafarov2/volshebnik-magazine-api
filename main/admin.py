@@ -51,7 +51,8 @@ class ProductAdmin(ModelAdmin):
     list_display_links = ["pk", "title"]
     list_editable = ["publisher", "main_category", "subcategory", "price"]
     list_filter = ["publisher", "main_category", "subcategory", "base_category"]
-    search_fields = ["title"]
+    prepopulated_fields = {"slug": ("title",)}
+    search_fields = ["title", 'barcode']
     inlines = [ProductImageInline]
 
 
