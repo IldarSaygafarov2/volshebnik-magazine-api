@@ -35,9 +35,9 @@ class CategoryAgeAdmin(ModelAdmin):
     pass
 
 
-@admin.register(models.ProductBaseCategory)
-class ProductBaseCategoryAdmin(ModelAdmin):
-    pass
+# @admin.register(models.ProductBaseCategory)
+# class ProductBaseCategoryAdmin(ModelAdmin):
+#     pass
 
 
 class ProductImageInline(TabularInline):
@@ -48,9 +48,9 @@ class ProductImageInline(TabularInline):
 @admin.register(models.Product)
 class ProductAdmin(ModelAdmin):
     list_display = ["barcode", "title", "price", "publisher", "main_category", "subcategory"]
-    list_display_links = ["pk", "title"]
+    list_display_links = ["barcode", "title"]
     list_editable = ["publisher", "main_category", "subcategory", "price"]
-    list_filter = ["publisher", "main_category", "subcategory", "base_category"]
+    list_filter = ["publisher", "main_category", "subcategory"]
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ["title", 'barcode']
     inlines = [ProductImageInline]

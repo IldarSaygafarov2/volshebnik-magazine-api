@@ -3,11 +3,11 @@ from typing import Optional
 
 from ninja import Schema
 
-from .ages import CategoryAgeSchema
-from .category import CategorySchema
-from .publisher import PublisherSchema
-from .subcategory import SubcategorySchema
 from main.models import Product
+from api.schemas.ages import CategoryAgeSchema
+from api.schemas.category import CategorySchema
+from api.schemas.publisher import PublisherSchema
+from api.schemas.subcategory import SubcategorySchema
 
 
 class ProductSchema(Schema):
@@ -43,7 +43,7 @@ class ProductCreateSchema(Schema):
     main_category: Optional[str] = ""
     subcategory: Optional[str] = ""
     age: Optional[str] = ""
-    preview: Optional[str] = ""
+    image_url: Optional[str] = ""
 
 
 class ProductListSchema(Schema):
@@ -92,7 +92,6 @@ class ProductCharacteristicsSchema(Schema):
     size: Optional[str]
     product_code: Optional[int]
     binding: Optional[str]
-    base_categories: Optional[list[ProductBaseCategorySchema]]
     ages: list[CategoryAgeSchema]
     publisher: Optional[ProductPublisherSchema]
 
@@ -113,7 +112,6 @@ class ProductDetailSchema(Schema):
             sku=obj.sku,
             ages=obj.ages.all(),
             publisher=obj.publisher,
-            base_categories=obj.base_category.all(),
             pages=obj.pages,
             size=obj.size,
             product_code=obj.product_code,

@@ -97,16 +97,16 @@ class CategoryAge(models.Model):
         verbose_name_plural = "Возрастa"
 
 
-class ProductBaseCategory(models.Model):
-    name = models.CharField(verbose_name="Название", max_length=200)
-    slug = models.SlugField(verbose_name="Короткая ссылка")
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Базовая категория"
-        verbose_name_plural = "Базовые категории"
+# class ProductBaseCategory(models.Model):
+#     name = models.CharField(verbose_name="Название", max_length=200)
+#     slug = models.SlugField(verbose_name="Короткая ссылка")
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         verbose_name = "Базовая категория"
+#         verbose_name_plural = "Базовые категории"
 
 
 class Product(models.Model):
@@ -165,13 +165,13 @@ class Product(models.Model):
         null=True,
         blank=True,
     )
-    base_category = models.ManyToManyField(
-        ProductBaseCategory,
-        verbose_name="Базовые категории",
-        related_name="products",
-        null=True,
-        blank=True,
-    )
+    # base_category = models.ManyToManyField(
+    #     ProductBaseCategory,
+    #     verbose_name="Базовые категории",
+    #     related_name="products",
+    #     null=True,
+    #     blank=True,
+    # )
 
     def __str__(self):
         return self.title if self.title else str(self.barcode)
