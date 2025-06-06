@@ -52,6 +52,9 @@ class ProductListSchema(Schema):
     slug: str
     price: str
     preview: Optional[str]
+    is_on_sale: bool
+    is_new: bool
+    is_bestseller: bool
     subcategory: Optional[SubcategorySchema]
 
 

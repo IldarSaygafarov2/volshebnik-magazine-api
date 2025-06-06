@@ -35,11 +35,6 @@ class CategoryAgeAdmin(ModelAdmin):
     pass
 
 
-# @admin.register(models.ProductBaseCategory)
-# class ProductBaseCategoryAdmin(ModelAdmin):
-#     pass
-
-
 class ProductImageInline(TabularInline):
     model = models.ProductImage
     extra = 1
@@ -47,20 +42,29 @@ class ProductImageInline(TabularInline):
 
 @admin.register(models.Product)
 class ProductAdmin(ModelAdmin):
-    list_display = ["barcode", "title", "price", "publisher", "main_category", "subcategory"]
+    list_display = [
+        "barcode",
+        "title",
+        "price",
+        "publisher",
+        "main_category",
+        "subcategory",
+    ]
     list_display_links = ["barcode", "title"]
     list_editable = ["publisher", "main_category", "subcategory", "price"]
-    list_filter = ["publisher", "main_category", "subcategory"]
+    list_filter = [
+        "publisher",
+        "main_category",
+        "subcategory",
+        "is_on_sale",
+        "is_new",
+        "is_bestseller",
+    ]
     prepopulated_fields = {"slug": ("title",)}
-    search_fields = ["title", 'barcode']
+    search_fields = ["title", "barcode"]
     inlines = [ProductImageInline]
 
 
-# @admin.register(models.ProductVariant)
-# class ProductVariantAdmin(ModelAdmin):
-#     list_display = ['pk', 'name', 'category', 'subcategory']
-#     list_display_links = ['pk', 'name']
-#     list_editable = ['category', 'subcategory']
-#     list_filter = ['category', 'subcategory', 'created_at']
-#     prepopulated_fields = {'slug': ('name',)}
-#     search_fields = ['name']
+@admin.register(models.Slider)
+class SliderAdmin(ModelAdmin):
+    pass

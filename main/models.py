@@ -45,30 +45,6 @@ class Subcategory(models.Model):
         ordering = ["-created_at"]
 
 
-# class ProductVariant(models.Model):
-#     name = models.CharField(max_length=200, verbose_name='Вид продукта')
-#     slug = models.SlugField(verbose_name='Короткая ссылка на продукт', help_text='Данное поле заполнять не нужно')
-#     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория',
-#                                  related_name='product_variants')
-#     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='product_variants',
-#                                     verbose_name='Подкатегория')
-#
-#     created_at = models.DateTimeField(verbose_name='Дата добавления', auto_now_add=True)
-#
-#     def save(self, *args, **kwargs):
-#         if not self.slug:
-#             self.slug = slugify(self.name)
-#         super(ProductVariant, self).save(*args, **kwargs)
-#
-#     def __str__(self):
-#         return self.name
-#
-#     class Meta:
-#         verbose_name = 'Вид продукта'
-#         verbose_name_plural = 'Виды продуктов'
-#         ordering = ['-created_at']
-
-
 class PublishingHouse(models.Model):
     name = models.CharField(verbose_name="Название", max_length=200)
     slug = models.SlugField(
@@ -95,18 +71,6 @@ class CategoryAge(models.Model):
     class Meta:
         verbose_name = "Возраст"
         verbose_name_plural = "Возрастa"
-
-
-# class ProductBaseCategory(models.Model):
-#     name = models.CharField(verbose_name="Название", max_length=200)
-#     slug = models.SlugField(verbose_name="Короткая ссылка")
-#
-#     def __str__(self):
-#         return self.name
-#
-#     class Meta:
-#         verbose_name = "Базовая категория"
-#         verbose_name_plural = "Базовые категории"
 
 
 class Product(models.Model):
@@ -165,13 +129,14 @@ class Product(models.Model):
         null=True,
         blank=True,
     )
-    # base_category = models.ManyToManyField(
-    #     ProductBaseCategory,
-    #     verbose_name="Базовые категории",
-    #     related_name="products",
-    #     null=True,
-    #     blank=True,
-    # )
+
+    is_new = models.BooleanField(verbose_name="Является новинкой ?", default=False)
+    is_bestseller = models.BooleanField(
+        verbose_name="Является хитом продаж?", default=False
+    )
+    is_on_sale = models.BooleanField(
+        verbose_name="Является товаром со скидкой ?", default=False
+    )
 
     def __str__(self):
         return self.title if self.title else str(self.barcode)
@@ -205,3 +170,15 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = "Фото продукта"
         verbose_name_plural = "Фото продукта"
+
+
+class Slider(models.Model):
+    image = models.ImageField(verbose_name="Фото", upload_to="slider/images/")
+    created_at = models.DateTimeField(verbose_name="Дата добавления", auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"Photo: № {self.pk} - {self.created_at}"
+
+    class Meta:
+        verbose_name = "Фото слайдера"
+        verbose_name_plural = "Фото слайдера"

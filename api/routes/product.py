@@ -1,15 +1,16 @@
+from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
+from ninja import Router
+
 from api.schemas.product import (
     ProductCreateSchema,
+    ProductDetailSchema,
     ProductListSchema,
     ProductPaginatedSchema,
     ProductResultSchema,
-    ProductDetailSchema,
 )
 from api.services.product import ProductService
-from django.http import HttpRequest
 from main.models import Product
-from ninja import Router
-from django.shortcuts import get_object_or_404
 
 router = Router(tags=["Products"])
 product_service = ProductService()
