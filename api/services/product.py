@@ -7,14 +7,14 @@ from main import models
 
 class ProductService:
     IMAGES_DATA = {
-        "robins.ru": 'https://robins.ru',
-        "kristall-kanc.ru": 'https://kristall-kanc.ru',
-        "moy-lvenok.ru": 'https://moy-lvenok.ru',
-        "chitatel.by": 'https://chitatel.by',
-        "www.detmir.ru": 'https://www.detmir.ru',
-        "shkola7gnomov.ru": 'https://shkola7gnomov.ru',
-        "childrensmarket.ru": 'https://childrensmarket.ru',
-        "maguss.ru": 'https://maguss.ru',
+        "robins.ru": "https://robins.ru",
+        "kristall-kanc.ru": "https://kristall-kanc.ru",
+        "moy-lvenok.ru": "https://moy-lvenok.ru",
+        "chitatel.by": "https://chitatel.by",
+        "www.detmir.ru": "https://www.detmir.ru",
+        "shkola7gnomov.ru": "https://shkola7gnomov.ru",
+        "childrensmarket.ru": "https://childrensmarket.ru",
+        "maguss.ru": "https://maguss.ru",
     }
 
     def create_or_update(self, data: ProductCreateSchema):
@@ -22,8 +22,8 @@ class ProductService:
         print(images.get(data.title))
 
         if data.main_category is not None:
-            main_category, main_category_created = models.Category.objects.get_or_create(
-                name=data.main_category
+            main_category, main_category_created = (
+                models.Category.objects.get_or_create(name=data.main_category)
             )
         else:
             main_category = None
@@ -38,8 +38,6 @@ class ProductService:
             )
         else:
             product_subcategory = None
-
-        # print(f'{product_subcategory=}')
 
         publisher_obj, publisher_created = models.PublishingHouse.objects.get_or_create(
             name=data.publisher,

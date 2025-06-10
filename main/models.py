@@ -73,6 +73,10 @@ class CategoryAge(models.Model):
         verbose_name_plural = "Возрастa"
 
 
+def make_preview_image_path(instance, filename):
+    return f"products/{instance.slug}/previews/{filename}"
+
+
 class Product(models.Model):
     barcode = models.IntegerField(verbose_name="Штрихкод", unique=True)
     title = models.CharField(
@@ -80,7 +84,10 @@ class Product(models.Model):
     )
     slug = models.SlugField(verbose_name="Короткая ссылка")
     preview = models.ImageField(
-        upload_to="products/", null=True, blank=True, verbose_name="Заставка"
+        upload_to=make_preview_image_path,
+        null=True,
+        blank=True,
+        verbose_name="Заставка",
     )
     price = models.CharField(max_length=150, verbose_name="Цена", null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
@@ -141,7 +148,7 @@ class Product(models.Model):
 
 
 def product_image_gallery_path(instance, filename):
-    return f"products/gallery/{instance.slug}/{filename}"
+    return f"products/{instance.slug}/gallery//{filename}"
 
 
 class ProductImage(models.Model):
@@ -153,7 +160,7 @@ class ProductImage(models.Model):
     )
     image = models.ImageField(
         verbose_name="Фотография",
-        upload_to="products/gallery",
+        upload_to=product_image_gallery_path,
         null=True,
         blank=True,
     )

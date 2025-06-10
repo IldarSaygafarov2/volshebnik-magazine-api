@@ -1,90 +1,127 @@
-from pprint import pprint
-import json
-from main import models
+from typing import Any
 from django.core.management.base import BaseCommand
+from pprint import pprint
+
+import openpyxl
 from slugify import slugify
-from pathlib import Path
-import os
+
+from main import models
+
+HEADERS = [
+    "№",
+    "Баркод",
+    "Название",
+    "Издательство",
+    "Описание",
+    "Возраст",
+    "Габариты см",
+    "Кол-во страниц",
+    "Переплёт",
+    "Категория",
+    "Под категория",
+    "Цена",
+    "Ссылка на фото",
+]
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+def get_data_from_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    ws = wb.active
+    my_list = list()
+    for idx, value in enumerate(
+        ws.iter_rows(
+            min_row=1, max_row=ws.max_row + 1, min_col=1, max_col=13, values_only=True
+        )
+    ):
+        is_all_none = all(list(map(lambda x: x is None, value[1:])))
+        if not is_all_none:
+            if idx == 0:
+                continue
+            my_list.append(dict(zip(HEADERS, value)))
+
+    return my_list
 
 
 class Command(BaseCommand):
-    def handle(self, *args, **options):
-        with open("json_data/final_result.json", "r", encoding="utf-8") as file:
-            content = json.load(file)
+    def handle(self, *args: Any, **options: Any) -> str | None:
+        excel_data = get_data_from_excel_file("Список товаров.xlsx")
 
-        with open("json_data/photos.json", "r", encoding="utf-8") as photos:
-            photos_content = json.load(photos)
+        for row in excel_data:
+            barcode = row.get("Баркод")
 
-        _ages = []
-        _categories = []
+            if not barcode:
+                print("no barcode, continue")
+                continue
 
-        for item in content:
-            sku = item.get("Артикул:", "")
-            price = int(item.get("price")) * 24.70
-            slug = item.get("url").split("/")[-2]
-            product_code = item.get("Код товара:")
+            age = row.get("Возраст")
+            size = row.get("Габариты см")
+            publisher = row.get("Издательство")
+            category = row.get("Категория")
+            pages = row.get("Кол-во страниц")
+            title = row.get("Название")
+            description = row.get("Описание")
+            binding = row.get("Переплёт")
+            subcategory = row.get("Под категория")
 
-            photos_content_item = photos_content.get(slug)
+            price = row.get("Цена")
 
-            preview_path = os.path.join("products", photos_content_item.get("preview"))
-
-            ages = item.get("Возраст:", "")
-
-            for age in ages.split(","):
-                _age, created = models.CategoryAge.objects.get_or_create(age=age)
-                # print("age", _age)
-
-            publisher_name = item.get("Издательство:")
-            if publisher_name is not None:
-                publisher, created = models.PublishingHouse.objects.get_or_create(
-                    name=publisher_name,
-                    slug=slugify(publisher_name),
+            if category is not None:
+                category, category_created = models.Category.objects.get_or_create(
+                    name=category
                 )
+            else:
+                category = None
 
-            category_names = item.get("Категория:")
-            if category_names is not None:
-                for category_name in category_names.split(","):
-                    base_category, created = (
-                        models.ProductBaseCategory.objects.get_or_create(
-                            name=category_name, slug=slugify(category_name)
-                        )
+            if subcategory is not None and category is not None:
+                product_subcategory, product_subcategory_created = (
+                    models.Subcategory.objects.get_or_create(
+                        name=subcategory,
+                        slug=slugify(subcategory),
+                        category=category,
                     )
-
-                    # print(base_category)
-
-            product, created = models.Product.objects.get_or_create(
-                barcode=item.get("barcode"),
-                title=item.get("title"),
-                slug=slug,
-                price=price,
-                description=item.get("description"),
-                sku=sku,
-                preview=preview_path,
-                product_code=int(product_code),
-                pages=item.get("Количество страниц:", "0"),
-                size=item.get("Размер:", ""),
-                publisher=publisher,
-            )
-            print(product)
-
-            for img in photos_content.get(slug).get("gallery"):
-                gallery_image_path = os.path.join("products", "gallery", img)
-                gallery_obj = models.ProductImage.objects.get_or_create(
-                    product=product, image=gallery_image_path
                 )
-                print(gallery_obj)
+            else:
+                product_subcategory = None
 
-            if category_names is not None:
-                for category_name in category_names.split(","):
-                    obj = models.ProductBaseCategory.objects.get(name=category_name)
-                    product.base_category.add(obj)
-                    print(product.base_category)
+            publisher_obj, publisher_created = (
+                models.PublishingHouse.objects.get_or_create(
+                    name=publisher,
+                    slug=slugify(publisher),
+                )
+            )
+            age, created_age = models.CategoryAge.objects.get_or_create(age=age)
 
-            for age in ages.split(","):
-                _age, created = models.CategoryAge.objects.get_or_create(age=age)
-                product.ages.add(_age)
-                # print("age", _age)
-        # print(count)
+            try:
+                product = models.Product.objects.get(barcode=int(barcode))
+                product.ages.add(age)
+                product.size = size
+                product.publisher = publisher_obj
+                product.main_category = category
+                product.title = title
+                product.slug = slugify(title)
+                product.description = description
+                product.binding = binding
+                product.subcategory = product_subcategory
+                product.price = int(price) if price else 0
+                product.pages = pages
+                product.save()
+                print(f"[UPDATED]: {product}")
+
+            except models.Product.DoesNotExist:
+                product = models.Product.objects.create(
+                    barcode=int(barcode),
+                    title=title,
+                    size=size,
+                    slug=slugify(title),
+                    price=price,
+                    description=description,
+                    binding=binding,
+                    main_category=category,
+                    subcategory=product_subcategory,
+                    publisher=publisher_obj,
+                    pages=pages,
+                )
+                product.ages.add(age)
+                print(f"[CREATED]: {product}")
+
+            # return product, is_updated, is_created
