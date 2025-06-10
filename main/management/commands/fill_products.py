@@ -6,6 +6,7 @@ import openpyxl
 from slugify import slugify
 
 from main import models
+from shop.settings import EXCEL_FILENAME
 
 HEADERS = [
     "№",
@@ -44,7 +45,7 @@ def get_data_from_excel_file(file):
 
 class Command(BaseCommand):
     def handle(self, *args: Any, **options: Any) -> str | None:
-        excel_data = get_data_from_excel_file("Список товаров.xlsx")
+        excel_data = get_data_from_excel_file(EXCEL_FILENAME)
 
         for row in excel_data:
             barcode = row.get("Баркод")
