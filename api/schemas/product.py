@@ -18,7 +18,7 @@ class ProductSchema(Schema):
     id: int
     title: Optional[str]
     slug: Optional[str]
-    price: Optional[float | str]
+    price: Optional[float | str] = ""
     description: Optional[str]
     ages: list[CategoryAgeSchema | None]
     size: Optional[str]
