@@ -54,7 +54,7 @@ class ProductListSchema(Schema):
     id: int
     title: str
     slug: str
-    price: str
+    price: Optional[str]
     preview: Optional[str]
     is_on_sale: bool
     is_new: bool

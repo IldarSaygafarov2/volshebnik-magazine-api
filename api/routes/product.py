@@ -26,6 +26,7 @@ product_service = ProductService()
 #         product=product,
 #     )
 
+
 @router.post("/products/", response=ProductResultSchema)
 def create_product(request, data: ProductCreateSchema):
     product, is_updated, is_created = product_service.create_or_update(data)
