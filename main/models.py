@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.templatetags.static import static
 
 
 class Category(models.Model):
@@ -77,6 +78,9 @@ def make_preview_image_path(instance, filename):
     return f"products/{instance.slug}/previews/{filename}"
 
 
+print(static("images/placeholder.jpg"))
+
+
 class Product(models.Model):
     barcode = models.IntegerField(verbose_name="Штрихкод", unique=True)
     title = models.CharField(
@@ -88,6 +92,7 @@ class Product(models.Model):
         null=True,
         blank=True,
         verbose_name="Заставка",
+        default="placeholder.jpg",
     )
     price = models.CharField(max_length=150, verbose_name="Цена", null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
