@@ -1,6 +1,7 @@
 from slugify import slugify
 
 from api.schemas.product import ProductCreateSchema
+from api.services.image import image_service
 from main import models
 
 
@@ -17,25 +18,36 @@ class ProductService:
     }
 
     def create_or_update(self, data: ProductCreateSchema):
-        main_category, main_category_created = models.Category.objects.get_or_create(
-            name=data.main_category
-        )
+        images = image_service.get_images_from_dir()
+        print(images.get(data.title))
 
-        product_subcategory, product_subcategory_created = (
-            models.Subcategory.objects.get_or_create(
-                name=data.subcategory,
-                slug=slugify(data.subcategory),
-                category=main_category,
+        if data.main_category is not None:
+            main_category, main_category_created = models.Category.objects.get_or_create(
+                name=data.main_category
             )
-        )
+        else:
+            main_category = None
+
+        if data.subcategory is not None:
+            product_subcategory, product_subcategory_created = (
+                models.Subcategory.objects.get_or_create(
+                    name=data.subcategory,
+                    slug=slugify(data.subcategory),
+                    category=main_category,
+                )
+            )
+        else:
+            product_subcategory = None
+
+        # print(f'{product_subcategory=}')
+
         publisher_obj, publisher_created = models.PublishingHouse.objects.get_or_create(
             name=data.publisher,
             slug=slugify(data.publisher),
         )
         age, created_age = models.CategoryAge.objects.get_or_create(age=data.age)
 
-        is_updated = None
-        is_created = None
+        is_updated, is_created = None, None
 
         try:
             product = models.Product.objects.get(barcode=int(data.barcode))
@@ -53,14 +65,13 @@ class ProductService:
             product.pages = data.pages
             product.save()
             is_updated = True
-            print(f"Product updated: {product}")
         except models.Product.DoesNotExist:
             product = models.Product.objects.create(
                 barcode=int(data.barcode),
                 title=data.title,
                 size=data.size,
                 slug=slugify(data.title),
-                price=int(data.price) if data.price else 0,
+                price=data.price,
                 description=data.description,
                 binding=data.binding,
                 main_category=main_category,
@@ -70,6 +81,5 @@ class ProductService:
             )
             product.ages.add(age)
             is_created = True
-            print(f"product created: {product}")
 
         return product, is_updated, is_created

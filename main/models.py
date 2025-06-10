@@ -84,9 +84,6 @@ class Product(models.Model):
     )
     price = models.CharField(max_length=150, verbose_name="Цена", null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
-    sku = models.CharField(
-        max_length=200, verbose_name="Артикул", null=True, blank=True
-    )
     ages = models.ManyToManyField(CategoryAge, verbose_name="Возраста")
     size = models.CharField(
         verbose_name="Размер", max_length=200, null=True, blank=True
@@ -97,9 +94,6 @@ class Product(models.Model):
         default="0",
         null=True,
         blank=True,
-    )
-    product_code = models.IntegerField(
-        verbose_name="Код товара", default=0, null=True, blank=True
     )
     binding = models.CharField(
         verbose_name="Переплет", blank=True, null=True, max_length=100

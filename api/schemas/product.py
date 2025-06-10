@@ -10,25 +10,29 @@ from api.schemas.publisher import PublisherSchema
 from api.schemas.subcategory import SubcategorySchema
 
 
+class ProductSimpleSchema(Schema):
+    id: int
+
+
 class ProductSchema(Schema):
     id: int
-    title: str
-    slug: str
-    price: float | str
-    description: str
-    ages: list[CategoryAgeSchema]
-    size: str
-    pages: str
-    binding: str
-    publisher: PublisherSchema
-    main_category: CategorySchema
-    subcategory: SubcategorySchema
+    title: Optional[str]
+    slug: Optional[str]
+    price: Optional[float | str]
+    description: Optional[str]
+    ages: list[CategoryAgeSchema | None]
+    size: Optional[str]
+    pages: Optional[str]
+    binding: Optional[str]
+    publisher: Optional[PublisherSchema]
+    main_category: Optional[CategorySchema]
+    subcategory: Optional[SubcategorySchema]
 
 
 class ProductResultSchema(Schema):
     is_updated: Optional[bool]
     is_created: Optional[bool]
-    product: ProductSchema
+    product: ProductSimpleSchema
 
 
 class ProductCreateSchema(Schema):
@@ -112,11 +116,9 @@ class ProductDetailSchema(Schema):
     def resolve_characteristics(obj: Product) -> ProductCharacteristicsSchema:
         return ProductCharacteristicsSchema(
             barcode=obj.barcode,
-            sku=obj.sku,
             ages=obj.ages.all(),
             publisher=obj.publisher,
             pages=obj.pages,
             size=obj.size,
-            product_code=obj.product_code,
             binding=obj.binding,
         )
