@@ -94,10 +94,8 @@ class ProductBaseCategorySchema(Schema):
 
 class ProductCharacteristicsSchema(Schema):
     barcode: Optional[int]
-    sku: Optional[str]
     pages: Optional[str]
     size: Optional[str]
-    product_code: Optional[int]
     binding: Optional[str]
     ages: list[CategoryAgeSchema]
     publisher: Optional[ProductPublisherSchema]
