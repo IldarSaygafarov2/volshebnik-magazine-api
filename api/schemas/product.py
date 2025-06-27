@@ -52,6 +52,7 @@ class ProductCreateSchema(Schema):
 
 class ProductListSchema(Schema):
     id: int
+    barcode: int | None
     title: str
     slug: str
     price: Optional[str]
