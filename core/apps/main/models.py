@@ -5,6 +5,9 @@ from django.templatetags.static import static
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Категория", unique=True)
+    image = models.ImageField(verbose_name='Фото категории', upload_to='categories/', null=True, blank=True,
+                              default='placeholder.jpg')
+    is_popular = models.BooleanField(verbose_name='Сделать категорию популярной', default=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
 
     def __str__(self):

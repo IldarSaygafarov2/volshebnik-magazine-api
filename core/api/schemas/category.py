@@ -1,5 +1,7 @@
 from datetime import datetime
-from ninja import Schema
+from typing import Optional
+
+from ninja import Schema, Field
 
 
 class CategorySchema(Schema):
@@ -20,3 +22,10 @@ class CategoryExpandedSchema(Schema):
     name: str
     created_at: datetime
     subcategories: list[SubcategorySchema]
+
+
+class CategoryPopularSchema(Schema):
+    id: int
+    name: str
+    image: Optional[str]
+    is_popular: bool = Field(default=False)
