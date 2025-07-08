@@ -1,0 +1,101 @@
+{% extends 'unfold/layouts/skeleton.html' %}
+{% load unfold i18n admin_urls %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block base %}
+  <div id="page" class="flex min-h-screen">
+    {% if not is_popup and is_nav_sidebar_enabled %}
+      {% block nav-sidebar %}
+        {% include "admin/nav_sidebar.html" %}
+      {% endblock %}
+    {% endif %}
+
+    <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 ">
+      {% block content_before %}
+        {% include "unfold/helpers/header.html" %}
+      {% endblock %}
+
+      {% if not is_popup %}
+        {% spaceless %}
+          {% block breadcrumbs %}{% endblock %}
+        {% endspaceless %}
+      {% endif %}
+
+      {% block messages %}
+        <div class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} mx-auto">
+          {% include "unfold/helpers/messages.html" %}
+        </div>
+      {% endblock messages %}
+
+      {% block content %}
+        <div id="content-main" class="constance">
+          <div class="module" id="changelist">
+            <form id="changelist-form" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+              <div class="px-4 pb-4">
+                <div class="container mx-auto {% block coltype %}colM{% endblock %}">
+                  {% if form.non_field_errors %}
+                  <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                  {% if form.errors %}
+                    <ul class="errorlist">
+                  {% endif %}
+                  {% for field in form.hidden_fields %}
+                    {% for error in field.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                    {{ field }}
+                  {% endfor %}
+                  {% if form.errors %}
+                    </ul>
+                  {% endif %}
+
+                  {% if fieldsets %}
+                    {% for fieldset in fieldsets %}
+                      <fieldset class="module relative {% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
+                        {% if fieldset.title %}
+                          <h2 class="bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light text-sm 2xl:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark {% if fieldset.is_collapsible %}cursor-pointer{% endif %}">
+                            {{ fieldset.title }}
+                          </h2>
+                        {% endif %}
+
+                        {% if fieldset.description %}
+                          <div class="leading-relaxed mb-4 max-w-4xl text-sm">
+                            {{ fieldset.description|safe }}
+                          </div>
+                        {% endif %}
+
+                        <div class="{% fieldset_rows_classes %}">
+                          {% with config_values=fieldset.config_values %}
+                            {% include "unfold/constance/results_list.html" %}
+                          {% endwith %}
+                        </div>
+                      </fieldset>
+                    {% endfor %}
+                  {% else %}
+                    {% include "unfold/constance/results_list.html" %}
+                  {% endif %}
+                </div>
+              </div>
+
+
+              {% include "unfold/constance/submit_line.html" with is_popup=False %}
+            </form>
+          </div>
+        </div>
+      {% endblock %}
+
+      {% block sidebar %}{% endblock %}
+
+      {% block footer %}{% endblock %}
+    </div>
+  </div>
+{% endblock base %}

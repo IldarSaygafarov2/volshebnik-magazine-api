@@ -60,6 +60,7 @@ class ProductListSchema(Schema):
     is_on_sale: bool
     is_new: bool
     is_bestseller: bool
+    is_on_promotion: bool
     subcategory: Optional[SubcategorySchema]
 
 

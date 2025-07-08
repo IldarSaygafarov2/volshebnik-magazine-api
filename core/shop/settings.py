@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "django_celery_beat",
+
+    "constance",
     "nested_inline",
     "core.apps.main.apps.MainConfig",
     "core.apps.news.apps.NewsConfig",
@@ -114,13 +115,10 @@ USE_TZ = True
 STATIC_URL = "site/static/"
 STATIC_ROOT = BASE_DIR / "main/static"
 
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 UNFOLD = {
     "SITE_TITLE": "Volshebnik-shop",
@@ -136,16 +134,16 @@ GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1ovrfMEvJWpkttXBq9cp_
 TABLE_ID = "1ovrfMEvJWpkttXBq9cp_i2aLJcGWS2X8vQF_bfStuZA"
 CORS_ALLOW_ALL_ORIGINS = True
 
-# REDIS_HOST = "0.0.0.0"
-# REDIS_PORT = "6379"
-
-# CELERY_BROKER_URL = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
-# CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
-# CELERY_RESULT_BACKEND = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
-
-# CELERY_ACCEPT_CONTENT = ["application/json"]
-# CELERY_TASK_SERIALIZER = "json"
-# CELERY_RESULT_SERIALIZER = "json"
-
 IMAGES_PATH = os.getenv("IMAGES_PATH")
 EXCEL_FILENAME = os.getenv("EXCEL_FILENAME")
+
+CONSTANCE_CONFIG = {
+    'SITE_DESCRIPTION': (
+        'Волшебный магазин товаров для праздников, уюта и вдохновения. Доставка по всему Казахстану и СНГ.', ''),
+    'PHONE_NUMBER': ('+7 (707) 123-45-67', ''),
+    'EMAIL': ('info@volshebnik.uz', ''),
+    'ADDRESS': ('г. Алматы, ул. Сказочная, 1', ''),
+    'TELEGRAM_URL': ('https://t.me/joinchat/AAAAAFfIyzwGkO8X8CDnvA', ''),
+    'INSTAGRAM_URL': ('https://www.instagram.com/volshebnik.uz', ''),
+    'FACEBOOK_URL': ('https://www.facebook.com/Volshebnik.uz', '')
+}

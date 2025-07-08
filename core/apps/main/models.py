@@ -1,6 +1,5 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.templatetags.static import static
 
 
 class Category(models.Model):
@@ -81,9 +80,6 @@ def make_preview_image_path(instance, filename):
     return f"products/{instance.slug}/previews/{filename}"
 
 
-print(static("images/placeholder.jpg"))
-
-
 class Product(models.Model):
     barcode = models.IntegerField(verbose_name="Штрихкод", unique=True)
     title = models.CharField(
@@ -146,6 +142,7 @@ class Product(models.Model):
     is_on_sale = models.BooleanField(
         verbose_name="Является товаром со скидкой ?", default=False
     )
+    is_on_promotion = models.BooleanField(verbose_name='Является товаром по акции?', default=False)
 
     def __str__(self):
         return self.title if self.title else str(self.barcode)
@@ -191,3 +188,5 @@ class Slider(models.Model):
     class Meta:
         verbose_name = "Фото слайдера"
         verbose_name_plural = "Фото слайдера"
+
+

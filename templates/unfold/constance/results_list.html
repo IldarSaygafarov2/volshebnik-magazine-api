@@ -1,0 +1,60 @@
+{% load unfold static i18n %}
+
+<div id="results" class="w-full">
+  <div class="shadow-xs aligned rounded-default">
+    <table class="w-full border-collapse text-sm" style="table-layout: fixed">
+      <thead class="bg-muted text-muted-foreground uppercase tracking-wider text-xs border-b dark:border-base-800 border-base-200">
+        <tr>
+          <th class="px-4 py-3 font-semibold text-left">{% trans "Name" %}</th>
+          <th class="px-4 py-3 font-semibold text-left">{% trans "Default" %}</th>
+          <th class="px-4 py-3 font-semibold text-left">{% trans "Value" %}</th>
+          <th class="px-4 py-3 font-semibold text-center whitespace-nowrap">{% trans "Is modified" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in config_values %}
+          <tr class="bg-base hover:bg-muted border-b dark:border-base-800 border-base-200 transition">
+            <!-- Name -->
+            <td class="px-4 py-4 align-middle" style="width: 20rem">
+              <div class="flex flex-col gap-1">
+                <span id="{{ item.name|slugify }}" class="text-sm font-bold uppercase tracking-tight">
+                  {{ item.name }}
+                  <a href="#{{ item.name|slugify }}"
+                     title="{% trans 'Link to this setting' %}"
+                     class="ml-1 text-muted-foreground hover:text-foreground">¶</a>
+                </span>
+                {% if item.help_text %}
+                  <p class="text-xs text-muted leading-snug">{{ item.help_text|linebreaksbr }}</p>
+                {% endif %}
+              </div>
+            </td>
+
+            <!-- Default -->
+            <td class="px-4 py-4 text-muted whitespace-pre-wrap align-middle">
+              {{ item.default }}
+            </td>
+
+            <!-- Field -->
+            <td class="px-4 py-4 align-middle">
+            {% if item.form_field.errors %}
+              <div class="text-sm text-destructive text-red-600 dark:text-red-500 mb-1">{{ item.form_field.errors }}</div>
+            {% endif %}
+            <div class="mt-1">
+              {{ item.form_field }}
+            </div>
+            </td>
+
+            <!-- Is Modified -->
+            <td class="px-4 py-4 text-center align-middle whitespace-nowrap">
+              {% if item.modified %}
+                <img src="{% static 'admin/img/icon-yes.'|add:icon_type %}" alt="✔" class="inline h-5 w-5" />
+              {% else %}
+                <img src="{% static 'admin/img/icon-no.'|add:icon_type %}" alt="✖" class="inline h-5 w-5" />
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

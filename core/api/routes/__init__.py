@@ -3,3 +3,4 @@ from .news import router as news_router
 from .product import router as product_router
 from .slider import router as slider_router
 from .subcategories import router as subcategory_router
+from .constance import router as constance_router
