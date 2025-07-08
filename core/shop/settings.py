@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "nested_inline",
     "core.apps.main.apps.MainConfig",
     "core.apps.news.apps.NewsConfig",
+    "core.apps.services.apps.ServicesConfig"
 ]
 
 MIDDLEWARE = [
