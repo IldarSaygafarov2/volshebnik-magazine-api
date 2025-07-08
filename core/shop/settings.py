@@ -147,3 +147,4 @@ CONSTANCE_CONFIG = {
     'INSTAGRAM_URL': ('https://www.instagram.com/volshebnik.uz', ''),
     'FACEBOOK_URL': ('https://www.facebook.com/Volshebnik.uz', '')
 }
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
