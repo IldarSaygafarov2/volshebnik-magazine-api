@@ -23,6 +23,7 @@ class ProductSchema(Schema):
     ages: list[CategoryAgeSchema | None]
     size: Optional[str]
     pages: Optional[str]
+    weight: Optional[str]
     binding: Optional[str]
     publisher: Optional[PublisherSchema]
     main_category: Optional[CategorySchema]
@@ -42,6 +43,7 @@ class ProductCreateSchema(Schema):
     price: Optional[str] = ""
     size: Optional[str] = ""
     pages: Optional[str] = None
+    weight: Optional[str] = ""
     binding: Optional[str] = ""
     publisher: Optional[str] = ""
     main_category: Optional[str] = ""

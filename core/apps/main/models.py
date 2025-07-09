@@ -106,6 +106,7 @@ class Product(models.Model):
         null=True,
         blank=True,
     )
+    weight = models.CharField(verbose_name='Вес гр', null=True, blank=True, max_length=150)
     binding = models.CharField(
         verbose_name="Переплет", blank=True, null=True, max_length=100
     )

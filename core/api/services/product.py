@@ -61,6 +61,7 @@ class ProductService:
             product.subcategory = product_subcategory
             product.price = int(data.price) if data.price else 0
             product.pages = data.pages
+            product.weight = data.weight
             product.save()
             is_updated = True
         except models.Product.DoesNotExist:
@@ -76,6 +77,7 @@ class ProductService:
                 subcategory=product_subcategory,
                 publisher=publisher_obj,
                 pages=data.pages,
+                weight=data.weight,
             )
             product.ages.add(age)
             is_created = True
