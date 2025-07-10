@@ -18,8 +18,8 @@ class ProductService:
     }
 
     def create_or_update(self, data: ProductCreateSchema):
-        images = image_service.get_images_from_dir()
-        print(images.get(data.title))
+        # images = image_service.get_images_from_dir()
+        # print(images.get(data.title))
 
         if data.main_category is not None:
             main_category, main_category_created = (
