@@ -9,7 +9,7 @@ router = Router(tags=["Categories"])
 
 @router.get("/categories/", response=list[CategoryExpandedSchema])
 def get_categories(request: HttpRequest):
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('ordering_number')
     return categories
 
 

@@ -7,6 +7,11 @@ class Category(models.Model):
     image = models.ImageField(verbose_name='Фото категории', upload_to='categories/', null=True, blank=True,
                               default='placeholder.jpg')
     is_popular = models.BooleanField(verbose_name='Сделать категорию популярной', default=False)
+    ordering_number = models.IntegerField(
+        verbose_name='Порядковый номер категории',
+        help_text='Укажите число, под каким номером данная категория должна отображаться',
+        default=0
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
 
     def __str__(self):

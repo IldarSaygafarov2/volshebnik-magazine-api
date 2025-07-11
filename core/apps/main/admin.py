@@ -16,8 +16,9 @@ from . import models
 
 @admin.register(models.Category)
 class CategoryAdmin(ModelAdmin):
-    list_display = ["pk", "name"]
+    list_display = ["pk", "name", "ordering_number"]
     list_display_links = ["pk", "name"]
+    list_editable = ['ordering_number']
     list_filter = ["created_at"]
     search_fields = ["name"]
 
